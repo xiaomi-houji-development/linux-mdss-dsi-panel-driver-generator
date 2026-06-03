@@ -26,8 +26,8 @@ def generate_commands(p: Panel, cmd_name: str) -> str:
 			b.append(next(itr, 0))
 			b.append(next(itr, 0))
 
-		b.append(c.type.value | c.vc << 6)
-		b.append(int(c.ack) << 5 | int(long) << 6 | int(c.last) << 7)
+		b.append((c.type.value & 0x3f) | ((c.vc & 0x03) << 6))
+		b.append(((int(c.ack) & 1) << 5) | ((int(long) & 1) << 6) | ((int(c.last) & 1) << 7))
 
 		if long:
 			b += bytes(c.payload)
